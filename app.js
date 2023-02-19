@@ -1,6 +1,9 @@
 const express = require('express');
-const app = express();
+const ejs = require('ejs');
 const path = require('path');
+
+const app = express();
+app.set('view engine', 'ejs');
 
 const port = 3000;
 
@@ -14,7 +17,15 @@ app.use(express.static('public'));
 app.use(myLogger);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'temp/index.html'));
+  res.render('index');
+});
+app.get('/about', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, 'temp/index.html'));
+  res.render('about');
+});
+app.get('/add', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, 'temp/index.html'));
+  res.render('add');
 });
 
 app.listen(port, () => {
