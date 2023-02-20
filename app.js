@@ -14,7 +14,8 @@ const myLogger = (res, req, next) => {
 
 //middle ware
 app.use(express.static('public'));
-app.use(myLogger);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -26,6 +27,12 @@ app.get('/about', (req, res) => {
 app.get('/add', (req, res) => {
   //   res.sendFile(path.resolve(__dirname, 'temp/index.html'));
   res.render('add');
+});
+
+app.post('/photos', (req, res) => {
+  console.log('req:', req.body);
+  // ana sayfaya yönlendirir
+  res.redirect('/');
 });
 
 app.listen(port, () => {

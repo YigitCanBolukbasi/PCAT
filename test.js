@@ -1,22 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.set('strictQuery', false);
-// connect db
 
+// db varsa bağlanır yoksa yeni oluşturur
 mongoose.connect('mongodb://localhost/pcat-testone-db');
 
+// yeni bir şema oluşturur
 const photoSchema = new Schema({
   title: String,
   description: String,
 });
 
+// oluşturulan şablonu yeni koleksiyon oluşturarak bunun içine atar
 const photo = mongoose.model('photo', photoSchema);
 
 //create photo
 
 // photo.create({
-//   title: 'photo title 2',
-//   description: 'lorem ipsun 2',
+//   title: 'photo title 3',
+//   description: 'lorem ipsun 3',
 // });
 
 // read  photo
