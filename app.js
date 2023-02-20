@@ -1,8 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 const ejs = require('ejs');
 const path = require('path');
+const Photo = require('./models/Photo');
 
 const app = express();
+
+mongoose.connect('mongodb://localhost/pcat-testone-db');
+
 app.set('view engine', 'ejs');
 
 const port = 3000;
@@ -17,8 +23,11 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  const photos = await Photo.find({});
+  res.render('index', {
+    photos,
+  });
 });
 app.get('/about', (req, res) => {
   //   res.sendFile(path.resolve(__dirname, 'temp/index.html'));
@@ -29,8 +38,10 @@ app.get('/add', (req, res) => {
   res.render('add');
 });
 
-app.post('/photos', (req, res) => {
+app.post('/photos', async (req, res) => {
   console.log('req:', req.body);
+  // yakaladığımız veriyi dbye atıyoruz
+  Photo.create(req.body);
   // ana sayfaya yönlendirir
   res.redirect('/');
 });
